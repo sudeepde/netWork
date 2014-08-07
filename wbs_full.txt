@@ -1,0 +1,25 @@
+Create a seamless ecosystem for brands creators and content
+	Matching
+		Build new base score 1
+		Build new base score 2
+		Build new base score 3: Twitter
+			Learn Twitter API
+			Integrate with Twitter API
+			Extend data model to incorporate Twitter API data
+	Communications
+		Build messaging infrastructure
+			Extend data model for messaging
+			Build messaging UI
+				Research messaging front end options
+				Choose one messaging front end option
+	Payments
+	Campaign Management
+	Open Marketplace
+	Creator Agency
+	Closed Campaigns
+	Brand Agency
+	Autopricing / market pricing
+		Research natural clustering of YouTube channels with regard to # of subscribers total views avg views etc.
+		Create first draft of pricing model
+	Expanded data reach - YouTube Twitter
+	Creator self-improvement tools

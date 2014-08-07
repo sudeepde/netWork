@@ -1,0 +1,4 @@
+- Convert WBS to list of true tasks
+- Copy all the true tasks to a list
+- Remove all the front tabs
+- 

@@ -1,0 +1,25 @@
+Create a seamless ecosystem for brands creators and content
+	Matching
+		Build new base score 1
+		Build new base score 2
+		Build new base score 3: Twitter
+			Learn Twitter API
+			Integrate with Twitter API
+			Incorproate Twitter API data into DB
+	Communications
+		Build messaging infrastructure
+			Extend data model for messaging
+			Build messaging UI
+				Research messaging front end options
+				Choose one messaging front end option
+	Autopricing / market pricing
+		Research clustering of YouTube channels
+		Create first draft of pricing model
+	Expand data reach to YouTube and Twitter
+	Create self-improvement tools
+		Decide on self improvement tools
+			Research what creators need
+				Interview creators
+				Talk to industry experts
+		Design tools
+		Build tools
