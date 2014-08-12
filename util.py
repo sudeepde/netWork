@@ -32,17 +32,18 @@ class Tree():
         self.file_lines = file_data.split("\n")
         if len(self.file_lines) <= 0:
             raise TreeError("No task lines in the document")
-        if name is not None:
-            self.name = name
-        else:
-            self.name = file_lines[0].replace("\t", "")
+        self.name = name
+        self.root_id = None
+        self.current_node_id = 0
+        self.nodes = []
 
-    def add_node(self, name, id, parent_node=None):
-        current_id = self.current_node_id
-        self.nodes.append(Node(name=name, id=current_id, parent_node=parent_node))
-        if parent_node is not None:
-            added_node = self.get_node_by_id(current_id)
-            # parent_node.children.append(added_node)
+    def add_node(self, name, parent_node_id=None):
+        added_node = Node(name=name, id=self.current_node_id, parent_node_id=parent_node_id)
+        self.nodes.append(added_node)
+        if parent_node_id != None:
+            parent_node = self.get_node_by_id(parent_node_id)
+            added_node.set_parent_node(parent_node)
+            parent_node.append_child(child=added_node)
         self.current_node_id = self.current_node_id + 1
 
     def get_node_by_name(self, name):
@@ -68,7 +69,7 @@ class Tree():
             num_indents = current_line.count(indentation_character)
             task_name = current_line.replace(indentation_character,"")
             if i == 0: # Root node
-                self.add_node(name=current_line, id=self.current_node_id) # initializes tree with root task
+                self.add_node(name=current_line) # initializes tree with root task
             else: # all other nodes
                 # Find parent node
                 j = i - 1
@@ -81,8 +82,8 @@ class Tree():
                         break
                     else:
                         j = j - 1
-                parent_node = self.get_node_by_name(parent_node_name)
-                self.add_node(name=current_line, id=self.current_node_id, parent_node=parent_node)
+                parent_node_id = self.get_node_by_name(parent_node_name).id
+                self.add_node(name=current_line, parent_node_id=parent_node_id)
 
     # Return a list of leaf nodes
     def get_leaves(self):
@@ -94,7 +95,7 @@ class Tree():
 
     def create_node_path_names():
         for node in self.nodes:
-            if node.parent_node is not None:
+            if node.parent_node_id is not None:
                 break
 
 
@@ -102,19 +103,32 @@ class Node():
 
     # instance variables
     id = None
-    parent = None
     parent_node = None
+    parent_node_id = None
     children = []
-    name = None
+    name = None # the task name including indents
     num_indents = 0
-    long_name = None
+    task_name = None # the task name not including indents
 
-    def __init__(self, name, id, parent_node, num_indents=None):
-        self.name = name
-        self.parent_node = parent_node
-        self.id = id
-        if num_indents is not None:
+    def __init__(self, name, id, parent_node_id=None, num_indents=None):
+        if not isinstance(parent_node_id, int) and parent_node_id is not None:
+            raise TreeError("parent_node_id is not an integer: %s" % parent_node_id)
+        else:
+            self.name = name
+            self.task_name = name.replace('\t','')
+            self.parent_node_id = parent_node_id
+            self.id = id
+            self.children = []
+            self.parent_node = None
             self.num_indents = num_indents
+
+    def set_parent_node(self, parent_node):
+        self.parent_node = parent_node
+
+    def append_child(self, child):
+        print self.name
+        print child
+        self.children.append(child)
 
 
 # Testing
@@ -123,7 +137,16 @@ filepath = "C:\\Users\\Sudeep\\Documents\\GitHub\\netWork\\wbs_working.txt"
 data = open(filepath, 'r')
 data = data.read()
 
+# tree = Tree(name="Reelio Product Development", file_data=data)
+# tree.build_tree()
+# leaves = tree.get_leaves()
+# print"Number of leaves: ", len(leaves)
+
 tree = Tree(name="Reelio Product Development", file_data=data)
 tree.build_tree()
-leaves = tree.get_leaves()
-print"Number of leaves: ", len(leaves)
+# tree.add_node("master")
+# print tree.current_node_id
+# tree.add_node("child node 1", parent_node_id=tree.get_node_by_name("master").id)
+# print tree.current_node_id
+# tree.add_node("child node 2", parent_node_id=tree.get_node_by_name("master").id)
+# print tree.current_node_id
