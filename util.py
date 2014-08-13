@@ -89,11 +89,24 @@ class Tree():
     def get_leaves(self):
         leaves = []
         for node in self.nodes:
-            if len(node.children) > 0:
+            if len(node.children) == 0:
                 leaves.append(node)
         return leaves
 
-    def create_node_path_names():
+    def send_leaves_to_file(self, filename):
+        f = open(filename, 'w')
+        leaves = self.get_leaves()
+        file_data = []
+        for i in range(len(leaves)):
+            file_line = str(i) + " " + leaves[i].task_name
+            file_data.append(file_line)
+        file_data
+        file_data = '\n'.join(str(x) for x in file_data)
+        file_data = file_data + "\n#\n"
+        f.write(file_data)
+        f.close()
+
+    def create_node_path_names(self):
         for node in self.nodes:
             if node.parent_node_id is not None:
                 break
@@ -144,6 +157,7 @@ data = data.read()
 
 tree = Tree(name="Reelio Product Development", file_data=data)
 tree.build_tree()
+tree.send_leaves_to_file("C:\\Users\\Sudeep\\Desktop\\test.tgf")
 # tree.add_node("master")
 # print tree.current_node_id
 # tree.add_node("child node 1", parent_node_id=tree.get_node_by_name("master").id)
